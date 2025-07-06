@@ -1,0 +1,14 @@
+# Virtual environment
+iotenv/
+
+# Environment variables (não commitar!)
+.env
+
+# Python cache files
+__pycache__/
+*/__pycache__/
+**/__pycache__/
+
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+*$py.class
