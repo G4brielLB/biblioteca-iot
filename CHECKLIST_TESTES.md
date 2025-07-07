@@ -98,11 +98,11 @@
 ## 📖 Testes - Livros
 
 ### Listar e Consultar
-FALTA ADICIONAR AUTOR NO LIVRO
 - [x] **GET** `/livros/` - Listar todos os livros
 - [x] **GET** `/livros/978-85-01-00001-1` - Cálculo Volume 1 (James Stewart)
-- [x] **GET** `/livros/978-85-01-00005-5` - Física I (Resnick, Halliday, Krane)
-- [x] **GET** `/livros/978-85-01-00003-3` - Álgebra Linear (Anton, Rorres)
+- [x] **GET** `/livros/978-85-01-00007-7` - Física I - Mecânica (Resnick, Halliday, Krane)
+- [x] **GET** `/livros/978-85-01-00003-3` - Álgebra Linear (Howard Anton, Chris Rorres)
+- [x] **GET** `/livros/978-85-01-00015-5` - Programação em Python (Mark Lutz)
 - [x] **GET** `/livros/INEXISTENTE` - Teste de erro 404
 
 ### Criar
@@ -111,21 +111,23 @@ FALTA ADICIONAR AUTOR NO LIVRO
 {
   "idLivro": "978-1234567890",
   "titulo": "Introdução à Inteligência Artificial",
+  "autor": "Russell Norvig",
   "editora": "Editora Tecnologia",
-  "codigoCutter": "C13",
+  "codigoCutter": "C01",
   "estanteId": "E1"
 }
 ```
 
 ### Atualizar e Deletar
-- [x] **PUT** `/livros/978-1234567890` - Mudar código Cutter
+- [x] **PUT** `/livros/978-1234567890` - Mudar autor e código Cutter
 ```json
 {
   "idLivro": "978-1234567890",
   "titulo": "Introdução à Inteligência Artificial",
+  "autor": "Stuart Russell, Peter Norvig",
   "editora": "Editora Tecnologia",
-  "codigoCutter": "C1",
-  "estanteId": "E1"
+  "codigoCutter": "C02",
+  "estanteId": "E2"
 }
 ```
 - [] **DELETE** `/livros/978-1234567890` - Deletar livro de teste
@@ -142,12 +144,11 @@ FALTA ADICIONAR AUTOR NO LIVRO
 - [x] **GET** `/instancias/INEXISTENTE` - Teste de erro 404
 
 ### Criar
-- [] **POST** `/instancias/` - Criar nova instância:
-ESTÁ CRIANDO UMA INSTÂNCIA PARA UM LIVRO INEXISTENTE
+- [x] **POST** `/instancias/` - Criar nova instância:
 ```json
 {
-  "idInstancia": "978-1234567890-EX99",
-  "idLivro": "978-1234567890",
+  "idInstancia": "978-85-01-00001-1-EX99",
+  "idLivro": "978-85-01-00001-1",
   "posX": 1.85,
   "prateleira": "MEIO",
   "situacao": "disponivel",
@@ -191,24 +192,27 @@ ESTÁ CRIANDO UMA INSTÂNCIA PARA UM LIVRO INEXISTENTE
 
 ## 🔍 Testes - Buscas Especiais
 
-### Buscar Livros por Nome
-  ESTÁ SENDO INÚTIL
-- [] **GET** `/instancias/livros/buscar?q=calculo` - Buscar "calculo"
-  - Deve retornar: Cálculo Volume 1 com suas instâncias
-- [] **GET** `/instancias/livros/buscar?q=fisica` - Buscar "fisica"
-  - Deve retornar: Física I com suas instâncias
-- [] **GET** `/instancias/livros/buscar?q=algebra` - Buscar "algebra"
-  - Deve retornar: Álgebra Linear com suas instâncias
-- [] **GET** `/instancias/livros/buscar?q=geometria` - Buscar "geometria"
-  - Deve retornar: Geometria Analítica com suas instâncias
-- [] **GET** `/instancias/livros/buscar?q=programacao` - Buscar "programacao"
-  - Deve retornar: Python Programming com suas instâncias
-- [] **GET** `/instancias/livros/buscar?q=james` - Buscar por autor "james"
+### Buscar Livros por Nome (agora busca título E autor)
+- [x] **GET** `/livros/buscar?q=calculo` - Buscar "calculo"
+  - Deve retornar: Cálculo Volume 1 e 2 (James Stewart)
+- [x] **GET** `/livros/buscar?q=fisica` - Buscar "fisica"
+  - Deve retornar: Física I, II, III (Resnick, Halliday, Krane)
+- [x] **GET** `/livros/buscar?q=algebra` - Buscar "algebra"
+  - Deve retornar: Álgebra Linear e Álgebra Moderna
+- [x] **GET** `/livros/buscar?q=geometria` - Buscar "geometria"
+  - Deve retornar: Geometria Analítica e Geometria Diferencial
+- [x] **GET** `/livros/buscar?q=programacao` - Buscar "programacao"
+  - Deve retornar: Programação em Python (Mark Lutz)
+- [x] **GET** `/livros/buscar?q=james` - Buscar por autor "james"
+  - Deve retornar: Livros do James Stewart (Cálculo)
+- [x] **GET** `/livros/buscar?q=stewart` - Buscar por sobrenome "stewart"
   - Deve retornar: Livros do James Stewart
-- [] **GET** `/instancias/livros/buscar?q=stewart` - Buscar por sobrenome "stewart"
-- [] **GET** `/instancias/livros/buscar?q=matematica` - Buscar por assunto "matematica"
-- [] **GET** `/instancias/livros/buscar?q=` - Busca vazia (deve retornar tudo)
-- [] **GET** `/instancias/livros/buscar?q=INEXISTENTE` - Busca sem resultados
+- [x] **GET** `/livros/buscar?q=lutz` - Buscar por autor "lutz"
+  - Deve retornar: Programação em Python (Mark Lutz)
+- [x] **GET** `/livros/buscar?q=resnick` - Buscar por autor "resnick"
+  - Deve retornar: Livros de Física (Resnick, Halliday, Krane)
+- [x] **GET** `/livros/buscar?q=` - Busca vazia (deve retornar tudo)
+- [x] **GET** `/livros/buscar?q=INEXISTENTE` - Busca sem resultados
 
 ### Detalhes Completos de Instâncias
 - [x] **GET** `/instancias/978-85-01-00001-1-EX1/detalhes` - Detalhes da instância 1 do Cálculo
@@ -240,10 +244,12 @@ ESTÁ CRIANDO UMA INSTÂNCIA PARA UM LIVRO INEXISTENTE
 ## 📊 Verificação Final
 
 ### Consistência dos Dados
-- [] Verificar se todas as instâncias têm livros válidos
-- [] Verificar se todas as instâncias têm estantes válidas
-- [] Verificar se posições X,Y das instâncias batem com suas estantes
-- [] Verificar se códigos Cutter estão consistentes
+- [x] Verificar se todas as instâncias têm livros válidos
+- [x] Verificar se todas as instâncias têm estantes válidas
+- [x] Verificar se posições X,Y das instâncias batem com suas estantes
+- [x] Verificar se códigos Cutter estão consistentes (C01-C12)
+- [x] Verificar se todos os livros têm campo "autor" preenchido
+- [x] Verificar se códigos Cutter dos livros batem com os das estantes
 
 ### Performance
 - [] Cronometrar tempo de resposta das buscas

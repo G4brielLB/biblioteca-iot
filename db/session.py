@@ -24,3 +24,15 @@ def get_db():
         yield db
     finally:
         db.close()
+
+def init_db():
+    """Inicializa o banco de dados criando todas as tabelas."""
+    from models.base import Base
+    from models.beacon import BeaconORM
+    from models.estante import EstanteORM
+    from models.livro import LivroORM
+    from models.instancia_livro import InstanciaLivroORM
+    
+    # Cria todas as tabelas
+    Base.metadata.create_all(bind=engine)
+    print("✅ Banco de dados inicializado com todas as tabelas!")

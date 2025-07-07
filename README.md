@@ -189,41 +189,58 @@ Antes de executar o projeto, configure seu ambiente:
 ```json
 [
   {
-    "isbn": "978-8535206951",
+    "idLivro": "978-85-01-00001-1",
     "titulo": "Cálculo Volume 1",
     "autor": "James Stewart",
     "editora": "Cengage Learning",
-    "ano": 2013,
-    "assunto": "Matemática",
-    "codigoCutter": "S849c"
+    "codigoCutter": "C01",
+    "estanteId": "E1"
+  },
+  {
+    "idLivro": "978-85-01-00015-5",
+    "titulo": "Programação em Python",
+    "autor": "Mark Lutz",
+    "editora": "Novatec",
+    "codigoCutter": "C08",
+    "estanteId": "E8"
   }
 ]
 ```
 
 #### Obter livro específico
-- **GET** `/livros/{isbn}`
-- **Exemplo:** `/livros/978-8535206951`
+- **GET** `/livros/{idLivro}`
+- **Exemplo:** `/livros/978-85-01-00001-1`
+- **Resposta:**
+```json
+{
+  "idLivro": "978-85-01-00001-1",
+  "titulo": "Cálculo Volume 1",
+  "autor": "James Stewart",
+  "editora": "Cengage Learning",
+  "codigoCutter": "C01",
+  "estanteId": "E1"
+}
+```
 
 #### Criar novo livro
 - **POST** `/livros/`
 - **Body:**
 ```json
 {
-  "isbn": "978-1234567890",
-  "titulo": "Novo Livro",
-  "autor": "Autor Exemplo",
-  "editora": "Editora ABC",
-  "ano": 2024,
-  "assunto": "Tecnologia",
-  "codigoCutter": "A987n"
+  "idLivro": "978-1234567890",
+  "titulo": "Novo Livro de IA",
+  "autor": "Stuart Russell, Peter Norvig",
+  "editora": "Editora Tecnologia",
+  "codigoCutter": "C01",
+  "estanteId": "E1"
 }
 ```
 
 #### Atualizar livro
-- **PUT** `/livros/{isbn}`
+- **PUT** `/livros/{idLivro}`
 
 #### Deletar livro
-- **DELETE** `/livros/{isbn}`
+- **DELETE** `/livros/{idLivro}`
 
 ---
 
@@ -235,30 +252,30 @@ Antes de executar o projeto, configure seu ambiente:
 ```json
 [
   {
-    "numeroTombo": "T001",
-    "isbn": "978-8535206951",
-    "idEstante": "E1",
-    "disponivel": true,
-    "posX": 1.75,
-    "posY": 1.0
+    "idInstancia": "978-85-01-00001-1-EX1",
+    "idLivro": "978-85-01-00001-1",
+    "posX": 1.85,
+    "prateleira": "MEIO",
+    "situacao": "disponivel",
+    "ultimaAtualizacao": "2025-07-07T10:30:00"
   }
 ]
 ```
 
 #### Obter instância específica
-- **GET** `/instancias/{numero_tombo}`
+- **GET** `/instancias/{idInstancia}`
+- **Exemplo:** `/instancias/978-85-01-00001-1-EX1`
 
 #### Criar nova instância
 - **POST** `/instancias/`
 - **Body:**
 ```json
 {
-  "numeroTombo": "T999",
-  "isbn": "978-8535206951",
-  "idEstante": "E1",
-  "disponivel": true,
-  "posX": 1.75,
-  "posY": 1.0
+  "idInstancia": "978-85-01-00001-1-EX99",
+  "idLivro": "978-85-01-00001-1",
+  "posX": 1.85,
+  "prateleira": "CIMA",
+  "situacao": "disponivel"
 }
 ```
 
@@ -307,26 +324,34 @@ Antes de executar o projeto, configure seu ambiente:
 
 ### 🔍 Endpoints de Busca Especiais
 
-#### Buscar livros por nome
-- **GET** `/instancias/livros/buscar?q={termo}`
-- **Exemplo:** `/instancias/livros/buscar?q=calculo`
+#### Buscar livros por nome ou autor
+- **GET** `/livros/buscar?q={termo}`
+- **Exemplo:** `/livros/buscar?q=calculo` ou `/livros/buscar?q=james` ou `/livros/buscar?q=stewart`
+- **Funcionalidade:**
+  - Busca no **título** E no **autor**
+  - Busca parcial e insensível a acentos
+  - Retorna lista de livros que contenham o termo
 - **Resposta:**
 ```json
 [
   {
-    "livro": {
-      "isbn": "978-8535206951",
-      "titulo": "Cálculo Volume 1",
-      "autor": "James Stewart",
-      "editora": "Cengage Learning",
-      "ano": 2013,
-      "assunto": "Matemática",
-      "codigoCutter": "S849c"
-    },
-    "instancias": [
-      {
-        "numeroTombo": "T001",
-        "isbn": "978-8535206951",
+    "idLivro": "978-85-01-00001-1",
+    "titulo": "Cálculo Volume 1",
+    "autor": "James Stewart",
+    "editora": "Cengage Learning",
+    "codigoCutter": "C01",
+    "estanteId": "E1"
+  },
+  {
+    "idLivro": "978-85-01-00002-2",
+    "titulo": "Cálculo Volume 2",
+    "autor": "James Stewart",
+    "editora": "Cengage Learning",
+    "codigoCutter": "C01",
+    "estanteId": "E1"
+  }
+]
+```
         "idEstante": "E1",
         "disponivel": true,
         "posX": 1.75,
@@ -378,6 +403,33 @@ Antes de executar o projeto, configure seu ambiente:
   ]
 }
 ```
+
+## 📚 Sistema de Códigos Cutter
+
+O sistema utiliza **códigos Cutter compatíveis** entre estantes e livros para organização:
+
+### Estrutura dos Códigos
+- **Estantes:** `C01`, `C02`, `C03`, ..., `C12` (12 estantes)
+- **Livros:** Mesmo código da estante onde estão localizados
+
+### Organização por Assunto
+- **C01 (E1):** Matemática/Cálculo - James Stewart
+- **C02 (E2):** Álgebra - Howard Anton, Paulo Winterle  
+- **C03 (E3):** Geometria - Alfredo Steinbruch, Manfredo do Carmo
+- **C04 (E4):** Física Mecânica - Resnick, Halliday, Krane
+- **C05 (E5):** Física Termodinâmica - Yunus Cengel
+- **C06 (E6):** Eletromagnetismo - David Griffiths
+- **C07 (E7):** Química - John McMurry
+- **C08 (E8):** Programação - Mark Lutz, Luciano Ramalho
+- **C09 (E9):** Estruturas de Dados - Michael Goodrich, Thomas Cormen
+- **C10 (E10):** Banco de Dados - Ramez Elmasri, Carlos Heuser
+- **C11 (E11):** Redes - Andrew Tanenbaum, James Kurose
+- **C12 (E12):** Engenharia de Software - Ian Sommerville, Robert Martin
+
+### Consistência
+✅ **Todos os livros** têm códigos Cutter compatíveis com suas estantes  
+✅ **Busca por código Cutter** funciona tanto em livros quanto estantes  
+✅ **Navegação indoor** baseada na localização das estantes por código
 
 ## Estrutura do Projeto
 

@@ -54,7 +54,7 @@ def listar_livros(db: Session = Depends(get_db)):
 
 @router.get("/buscar", response_model=List[Livro])
 def buscar_livros_por_nome(q: str, db: Session = Depends(get_db)):
-    """Busca livros pelo nome (título), parcial e insensível a acentos e case."""
+    """Busca livros pelo nome (título) ou autor, parcial e insensível a acentos e case."""
     # Normaliza o termo de busca (remove acentos e converte para minúsculas)
     termo_normalizado = remover_acentos(q)
     
@@ -64,7 +64,10 @@ def buscar_livros_por_nome(q: str, db: Session = Depends(get_db)):
     
     for livro in todos_livros:
         titulo_normalizado = remover_acentos(livro.titulo)
-        if termo_normalizado in titulo_normalizado:
+        autor_normalizado = remover_acentos(livro.autor)
+        
+        # Busca no título OU no autor
+        if termo_normalizado in titulo_normalizado or termo_normalizado in autor_normalizado:
             livros_encontrados.append(livro)
     
     return livros_encontrados

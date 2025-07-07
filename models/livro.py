@@ -12,6 +12,7 @@ class LivroORM(Base):
     __tablename__ = "livros"
     idLivro = Column(String, primary_key=True)  # ISBN
     titulo = Column(String, nullable=False)
+    autor = Column(String, nullable=False)  # Novo campo autor
     editora = Column(String, nullable=False)
     codigoCutter = Column(String, nullable=False)
     estanteId = Column(String, nullable=False)  # FK para Estante
@@ -19,6 +20,7 @@ class LivroORM(Base):
 class Livro(BaseModel):
     idLivro: str
     titulo: str
+    autor: str  # Novo campo autor
     editora: str
     codigoCutter: str
     estanteId: str
