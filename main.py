@@ -3,11 +3,13 @@
 # Aqui será inicializado o app, incluídas as rotas e configurados os middlewares.
 
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from db.init_db import init_db
 from routes.beacons import router as beacons_router
 from routes.estantes import router as estantes_router
 from routes.livros import router as livros_router
 from routes.instancias import router as instancias_router
+from routes.painel import router as painel_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -25,9 +27,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Servir arquivos estáticos (CSS, JS, imagens)
+app.mount("/static", StaticFiles(directory="frontend"), name="static")
+
 init_db()  # Cria as tabelas no banco ao iniciar o app
 
 app.include_router(beacons_router)
 app.include_router(estantes_router)
 app.include_router(livros_router)
 app.include_router(instancias_router)
+app.include_router(painel_router)

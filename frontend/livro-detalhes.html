@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Livro | Biblioteca IoT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/painel.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-blue-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4 lg:py-6">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold flex items-center mb-2 sm:mb-0">
+                    <i class="fas fa-book mr-2 lg:mr-3"></i>
+                    Biblioteca IoT - Detalhes do Livro
+                </h1>
+                <a href="/painel/livros" class="text-blue-100 hover:text-white flex items-center text-sm lg:text-base">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Voltar à lista
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6 lg:py-8">
+        <!-- Loading -->
+        <div id="loading" class="text-center py-8 hidden">
+            <i class="fas fa-spinner fa-spin text-2xl text-blue-600"></i>
+            <p class="text-gray-600 mt-2">Carregando dados do livro...</p>
+        </div>
+
+        <!-- Error -->
+        <div id="error" class="hidden">
+            <div class="bg-red-50 border border-red-200 rounded-lg p-4 lg:p-6">
+                <div class="flex flex-col sm:flex-row sm:items-center">
+                    <i class="fas fa-exclamation-triangle text-red-500 text-2xl mb-2 sm:mb-0 sm:mr-4"></i>
+                    <div>
+                        <h3 class="text-lg font-semibold text-red-800">Erro ao carregar livro</h3>
+                        <p id="errorMessage" class="text-red-700 text-sm lg:text-base"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dados Gerais do Livro -->
+        <div id="livroInfo" class="bg-white rounded-lg shadow-md p-4 lg:p-6 mb-6 lg:mb-8 hidden">
+            <h2 class="text-xl lg:text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                <i class="fas fa-info-circle mr-2 lg:mr-3 text-blue-600"></i>
+                Informações Gerais
+            </h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+                <div>
+                    <h3 id="livroTitulo" class="text-lg lg:text-xl font-bold text-gray-900 mb-2"></h3>
+                    <p id="livroAutor" class="text-base lg:text-lg text-gray-700 mb-3 flex items-center">
+                        <i class="fas fa-user mr-2 text-gray-500"></i>
+                        <span></span>
+                    </p>
+                    <p id="livroEditora" class="text-sm lg:text-base text-gray-600 mb-2 flex items-center">
+                        <i class="fas fa-building mr-2 text-gray-500"></i>
+                        <strong>Editora:</strong> <span class="ml-1"></span>
+                    </p>
+                </div>
+                
+                <div class="space-y-2">
+                    <p id="livroId" class="text-xs lg:text-sm text-gray-500 font-mono flex items-center flex-wrap">
+                        <i class="fas fa-barcode mr-2"></i>
+                        <strong>ID:</strong> <span class="ml-1 break-all"></span>
+                    </p>
+                    <p id="livroCutter" class="text-xs lg:text-sm text-gray-500 font-mono flex items-center">
+                        <i class="fas fa-tag mr-2"></i>
+                        <strong>Cutter:</strong> <span class="ml-1"></span>
+                    </p>
+                    <p id="livroEstante" class="text-xs lg:text-sm text-gray-500 font-mono flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        <strong>Estante:</strong> <span class="ml-1"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instâncias do Livro -->
+        <div id="instanciasContainer" class="bg-white rounded-lg shadow-md p-4 lg:p-6 hidden">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 lg:mb-6">
+                <h2 class="text-xl lg:text-2xl font-bold text-gray-800 mb-2 sm:mb-0 flex items-center">
+                    <i class="fas fa-list mr-2 lg:mr-3 text-blue-600"></i>
+                    Instâncias do Livro
+                    <span id="instanciasCount" class="text-sm lg:text-base font-normal text-gray-600 ml-2"></span>
+                </h2>
+                
+                <!-- Ordenação -->
+                <div class="flex items-center space-x-2">
+                    <label for="sortInstancias" class="text-sm font-medium text-gray-700 flex items-center">
+                        <i class="fas fa-sort mr-1"></i>
+                        <span class="hidden sm:inline">Ordenar por:</span>
+                    </label>
+                    <select 
+                        id="sortInstancias"
+                        class="px-3 py-1 lg:px-4 lg:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm lg:text-base"
+                    >
+                        <option value="id">ID da Instância</option>
+                        <option value="data">Última Atualização</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Lista de Instâncias -->
+            <div id="instanciasList" class="space-y-3 lg:space-y-4">
+                <!-- As instâncias serão carregadas aqui via JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-4 lg:py-6 mt-12 lg:mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm lg:text-base">&copy; 2025 Biblioteca IoT - Sistema de Gestão de Biblioteca</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/livro-detalhes.js"></script>
+</body>
+</html>

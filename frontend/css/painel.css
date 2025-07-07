@@ -1,0 +1,181 @@
+/* frontend/css/painel.css */
+
+/* Estilos customizados para o painel */
+.livro-card, .instancia-card {
+    transition: all 0.3s ease;
+}
+
+.livro-card:hover, .instancia-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.search-highlight {
+    background-color: #fef3c7;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+/* Loading animation customizada */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Responsividade para mobile */
+@media (max-width: 640px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    /* Ajustes para cards de livro */
+    .livro-card {
+        position: relative;
+        cursor: pointer;
+    }
+    
+    /* Força o layout em coluna no mobile */
+    .livro-card > div:first-child {
+        flex-direction: column !important;
+        gap: 1rem;
+    }
+    
+    /* Remove margens do container do botão */
+    .livro-card .lg\\:ml-6 {
+        margin-left: 0 !important;
+        align-self: stretch !important;
+    }
+    
+    /* Força o botão a ocupar toda a largura */
+    .livro-card a {
+        width: 100% !important;
+        padding: 12px 16px !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    /* Ajustes para header */
+    header h1 {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+    }
+    
+    /* Ajustes para formulários */
+    .grid.grid-cols-1.md\\:grid-cols-3 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    /* Botões em mobile */
+    .flex.space-x-4 {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .flex.space-x-4 > * {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* Cards de instância em mobile */
+    .instancia-card .grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    /* Esconder textos em botões pequenos */
+    .instancia-card button span {
+        display: none;
+    }
+    
+    /* Ajustar texto quebrado */
+    .break-all {
+        word-break: break-all;
+        font-size: 0.75rem;
+    }
+}
+
+/* Responsividade para tablet */
+@media (min-width: 641px) and (max-width: 1024px) {
+    .container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+    
+    /* Ajustes para grid em tablet */
+    .grid.grid-cols-1.lg\\:grid-cols-2 {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .grid.grid-cols-1.lg\\:grid-cols-3 {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
+
+/* Desktop (lg e xl) */
+@media (min-width: 1025px) {
+    .container {
+        max-width: 1200px;
+    }
+    
+    /* Melhor espaçamento em desktop */
+    .livro-card, .instancia-card {
+        padding: 1.5rem;
+    }
+    
+    /* Grid melhorado para desktop */
+    .grid.grid-cols-1.lg\\:grid-cols-2 {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    
+    .grid.grid-cols-1.lg\\:grid-cols-3 {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+/* Ajustes específicos para elementos */
+.font-mono {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Estados dos botões */
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Melhoria na acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+    .livro-card, .instancia-card, .fade-in {
+        transition: none;
+        animation: none;
+    }
+}
+
+/* Print styles */
+@media print {
+    header, footer, button, .bg-blue-600, .bg-gray-500 {
+        display: none !important;
+    }
+    
+    .bg-white {
+        box-shadow: none !important;
+        border: 1px solid #000;
+    }
+    
+    .text-blue-600, .text-blue-700 {
+        color: #000 !important;
+    }
+}
