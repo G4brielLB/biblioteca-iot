@@ -255,7 +255,6 @@ Antes de executar o projeto, configure seu ambiente:
     "idInstancia": "978-85-01-00001-1-EX1",
     "idLivro": "978-85-01-00001-1",
     "posX": 1.85,
-    "prateleira": "MEIO",
     "situacao": "disponivel",
     "ultimaAtualizacao": "2025-07-07T10:30:00"
   }
@@ -274,7 +273,6 @@ Antes de executar o projeto, configure seu ambiente:
   "idInstancia": "978-85-01-00001-1-EX99",
   "idLivro": "978-85-01-00001-1",
   "posX": 1.85,
-  "prateleira": "CIMA",
   "situacao": "disponivel"
 }
 ```
@@ -306,17 +304,15 @@ Antes de executar o projeto, configure seu ambiente:
 - **Body (JSON):**
 ```json
 {
-  "nova_posX": 2.0,
-  "nova_prateleira": "BAIXO"
+  "nova_posX": 2.0
 }
 ```
 - **Funcionalidade:**
   - Altera situação: `emprestado` → `disponivel`
-  - Atualiza posição física (posX e prateleira)
+  - Atualiza posição física (posX)
   - Atualiza `ultimaAtualizacao` automaticamente
   - **Validações:**
     - ❌ Apenas livros `emprestado` podem ser devolvidos
-    - ❌ Prateleira deve ser: `CIMA`, `MEIO` ou `BAIXO`
     - ✅ Validação automática via Pydantic
 - **Resposta:** Instância atualizada com nova situação e posição
 

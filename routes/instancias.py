@@ -23,7 +23,6 @@ Como acessar os endpoints:
       "idInstancia": "string",
       "idLivro": "string",
       "posX": float,
-      "prateleira": "CIMA|MEIO|BAIXO",
       "situacao": "disponivel|emprestado|cativo",
       "ultimaAtualizacao": "YYYY-MM-DDTHH:MM:SS"
     }
@@ -65,12 +64,11 @@ Como acessar os endpoints:
   POST /instancias/{idInstancia}/devolver
   Body (JSON):
     {
-      "nova_posX": float,
-      "nova_prateleira": "CIMA|MEIO|BAIXO"
+      "nova_posX": float
     }
   → Altera situação para "disponivel" e atualiza posição
   → Apenas livros "emprestado" podem ser devolvidos
-  Exemplo: /instancias/123456/devolver com body {"nova_posX": 1.8, "nova_prateleira": "CIMA"}
+  Exemplo: /instancias/123456/devolver com body {"nova_posX": 1.8}
 
 Todos os endpoints retornam/recebem JSON.
 """
@@ -202,10 +200,9 @@ def devolver_livro(
     if instancia.situacao != "emprestado":
         raise HTTPException(status_code=400, detail="Apenas livros emprestados podem ser devolvidos")
     
-    # Atualiza situação e posição (validação da prateleira é feita pelo Pydantic)
+    # Atualiza situação e posição
     instancia.situacao = "disponivel"
     instancia.posX = devolucao_data.nova_posX
-    instancia.prateleira = devolucao_data.nova_prateleira
     instancia.ultimaAtualizacao = datetime.now()
     
     db.commit()

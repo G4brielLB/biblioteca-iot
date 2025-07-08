@@ -150,7 +150,6 @@
   "idInstancia": "978-85-01-00001-1-EX99",
   "idLivro": "978-85-01-00001-1",
   "posX": 1.85,
-  "prateleira": "MEIO",
   "situacao": "disponivel",
   "ultimaAtualizacao": "2025-01-07T12:00:00"
 }
@@ -163,7 +162,6 @@
   "idInstancia": "978-1234567890-EX99",
   "idLivro": "978-1234567890",
   "posX": 2,
-  "prateleira": "MEIO",
   "situacao": "emprestado",
   "ultimaAtualizacao": "2025-01-07T13:00:00"
 }
@@ -305,8 +303,7 @@
   - Só devolve livro emprestado
   ```json
   {
-    "nova_posX": 2.0,
-    "nova_prateleira": "BAIXO"
+    "nova_posX": 2.0
   }
   ```
   - Deve alterar: emprestado → disponivel + nova posição
@@ -315,14 +312,12 @@
 - [] **POST** `/instancias/978-85-01-00001-1-EX3/devolver` - Tentar devolver livro disponível (deve dar erro)
   ```json
   {
-    "nova_posX": 1.8,
-    "nova_prateleira": "CIMA"
+    "nova_posX": 1.8
   }
   ```
-- [] **POST** `/instancias/978-85-01-00001-1-EX1/devolver` - Testar validação de prateleira inválida (deve dar erro)
+- [] **POST** `/instancias/978-85-01-00001-1-EX1/devolver` - Testar validação de posição inválida (deve dar erro)
   ```json
   {
-    "nova_posX": 2.0,
-    "nova_prateleira": "INVALIDA"
+    "nova_posX": "INVALIDA"
   }
   ```

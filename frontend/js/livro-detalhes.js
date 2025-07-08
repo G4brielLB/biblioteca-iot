@@ -130,10 +130,6 @@ class LivroDetalhes {
                                 <strong>Posição X:</strong> <span class="ml-1">${instancia.posX}</span>
                             </div>
                             <div class="flex items-center">
-                                <i class="fas fa-layer-group mr-2 text-gray-400"></i>
-                                <strong>Prateleira:</strong> <span class="ml-1">${instancia.prateleira}</span>
-                            </div>
-                            <div class="flex items-center">
                                 <i class="fas fa-clock mr-2 text-gray-400"></i>
                                 <strong>Atualizado:</strong> <span class="ml-1">${dataFormatada}</span>
                             </div>

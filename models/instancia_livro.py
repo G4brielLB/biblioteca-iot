@@ -14,7 +14,6 @@ class InstanciaLivroORM(Base):
     idInstancia = Column(String, primary_key=True)  # QR/barcode
     idLivro = Column(String, ForeignKey("livros.idLivro"), nullable=False)  # FK para Livro
     posX = Column(Float, nullable=False)
-    prateleira = Column(String, nullable=False)  # Ex: "CIMA", "MEIO", "BAIXO"
     situacao = Column(String, nullable=False)  # Ex: "disponivel", "emprestado", "cativo"
     ultimaAtualizacao = Column(DateTime, nullable=False)
 
@@ -22,7 +21,6 @@ class InstanciaLivro(BaseModel):
     idInstancia: str
     idLivro: str
     posX: float
-    prateleira: Literal["CIMA", "MEIO", "BAIXO"]
     situacao: Literal["disponivel", "emprestado", "cativo"]
     ultimaAtualizacao: datetime
 

@@ -17,4 +17,3 @@ class DetalhesInstancia(BaseModel):
 
 class DevolucaoRequest(BaseModel):
     nova_posX: float = Field(..., description="Nova posição X na estante após devolução")
-    nova_prateleira: str = Field(..., pattern="^(CIMA|MEIO|BAIXO)$", description="Nova prateleira (CIMA, MEIO ou BAIXO)")

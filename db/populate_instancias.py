@@ -24,7 +24,6 @@ livros_ids = [
 ]
 
 instancias_exemplo = []
-prateleiras = ["CIMA", "MEIO", "BAIXO"]
 
 for i, idLivro in enumerate(livros_ids):
     # Determina a posição X baseada na estante (E1-E6 coluna 1, E7-E12 coluna 2)
@@ -33,7 +32,6 @@ for i, idLivro in enumerate(livros_ids):
     
     for j in range(1, 6):  # 5 instâncias por livro
         idInstancia = f"{idLivro}-EX{j}"
-        prateleira = prateleiras[j % 3]
         
         # Situação: maioria disponível, alguns emprestados/cativos
         if j == 2:
@@ -49,7 +47,6 @@ for i, idLivro in enumerate(livros_ids):
             "idInstancia": idInstancia,
             "idLivro": idLivro,
             "posX": posX + 0.1 * j,  # Pequena variação na posição
-            "prateleira": prateleira,
             "situacao": situacao,
             "ultimaAtualizacao": ultimaAtualizacao
         })

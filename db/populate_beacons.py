@@ -8,19 +8,25 @@ from db.session import SessionLocal
 from models.beacon import BeaconORM
 
 beacons_exemplo = [
-    {"mac": "AA:BB:CC:DD:EE:01", "posX": 0.0, "posY": 0.0, "label": "Ponto A"},
-    {"mac": "AA:BB:CC:DD:EE:02", "posX": 10.0, "posY": 0.0, "label": "Ponto B"},
-    {"mac": "AA:BB:CC:DD:EE:03", "posX": 5.0, "posY": 8.66, "label": "Ponto C"},  # Triângulo equilátero
+    {"mac": "E0:5A:1B:77:25:3E", "posX": 1.0, "posY": 0.2, "label": "Beacon 1"},
+    {"mac": "48:E7:29:97:3B:2E", "posX": 5.0, "posY": 1.6, "label": "Beacon 2"},
+    {"mac": "48:E7:29:99:97:BE", "posX": 1.0, "posY": 3.4, "label": "Beacon 3"},
 ]
 
 def popular_beacons():
     db: Session = SessionLocal()
+    
+    # Remover todos os beacons existentes
+    db.query(BeaconORM).delete()
+    print("Beacons existentes removidos.")
+    
+    # Adicionar os novos beacons
     for beacon in beacons_exemplo:
-        if not db.query(BeaconORM).filter(BeaconORM.mac == beacon["mac"]).first():
-            db.add(BeaconORM(**beacon))
+        db.add(BeaconORM(**beacon))
+    
     db.commit()
     db.close()
 
 if __name__ == "__main__":
     popular_beacons()
-    print("Beacons de exemplo inseridos com sucesso!")
+    print("Beacons atualizados com sucesso!")
