@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca IoT - Sistema de Gestão</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .pulse-icon {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-xl">
+        <div class="container mx-auto px-4 py-6 lg:py-8">
+            <div class="text-center">
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2 flex items-center justify-center">
+                    <i class="fas fa-book-open mr-3 lg:mr-4 pulse-icon"></i>
+                    Biblioteca IoT
+                </h1>
+                <p class="text-lg sm:text-xl text-white/90">
+                    Sistema Inteligente de Gestão de Biblioteca
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 lg:py-12">
+        <!-- Welcome Message -->
+        <div class="text-center mb-12">
+            <h2 class="text-2xl lg:text-3xl font-bold text-gray-800 mb-4">
+                Bem-vindo ao Sistema de Biblioteca
+            </h2>
+            <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+                Escolha uma das opções abaixo para navegar pelo sistema de gestão da biblioteca
+            </p>
+        </div>
+
+        <!-- Menu Principal -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+            
+            <!-- Painel de Livros -->
+            <a href="/painel/livros" class="card-hover">
+                <div class="bg-white rounded-xl shadow-lg p-6 lg:p-8 text-center border-2 border-transparent hover:border-blue-200">
+                    <div class="mb-6">
+                        <i class="fas fa-books text-5xl lg:text-6xl text-blue-600 mb-4 block"></i>
+                        <h3 class="text-xl lg:text-2xl font-bold text-gray-800 mb-2">
+                            Painel de Livros
+                        </h3>
+                        <p class="text-gray-600 text-sm lg:text-base">
+                            Visualize todos os livros disponíveis, busque por título ou autor e veja detalhes das instâncias
+                        </p>
+                    </div>
+                    <div class="bg-blue-50 text-blue-700 px-4 py-2 rounded-lg font-medium text-sm lg:text-base">
+                        <i class="fas fa-search mr-2"></i>
+                        Explorar Acervo
+                    </div>
+                </div>
+            </a>
+
+            <!-- Empréstimo -->
+            <a href="/emprestimo" class="card-hover">
+                <div class="bg-white rounded-xl shadow-lg p-6 lg:p-8 text-center border-2 border-transparent hover:border-green-200">
+                    <div class="mb-6">
+                        <i class="fas fa-hand-holding-heart text-5xl lg:text-6xl text-green-600 mb-4 block"></i>
+                        <h3 class="text-xl lg:text-2xl font-bold text-gray-800 mb-2">
+                            Empréstimo
+                        </h3>
+                        <p class="text-gray-600 text-sm lg:text-base">
+                            Realize empréstimos de livros de forma rápida e eficiente usando QR Code ou busca manual
+                        </p>
+                    </div>
+                    <div class="bg-green-50 text-green-700 px-4 py-2 rounded-lg font-medium text-sm lg:text-base">
+                        <i class="fas fa-qrcode mr-2"></i>
+                        Emprestar Livro
+                    </div>
+                </div>
+            </a>
+
+            <!-- Devolução -->
+            <a href="/devolucao" class="card-hover">
+                <div class="bg-white rounded-xl shadow-lg p-6 lg:p-8 text-center border-2 border-transparent hover:border-purple-200">
+                    <div class="mb-6">
+                        <i class="fas fa-undo-alt text-5xl lg:text-6xl text-purple-600 mb-4 block"></i>
+                        <h3 class="text-xl lg:text-2xl font-bold text-gray-800 mb-2">
+                            Devolução
+                        </h3>
+                        <p class="text-gray-600 text-sm lg:text-base">
+                            Processe devoluções e atualize a localização dos livros na biblioteca
+                        </p>
+                    </div>
+                    <div class="bg-purple-50 text-purple-700 px-4 py-2 rounded-lg font-medium text-sm lg:text-base">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        Devolver Livro
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Estatísticas Rápidas -->
+        <div class="mt-12 lg:mt-16">
+            <h3 class="text-xl lg:text-2xl font-bold text-gray-800 text-center mb-8">
+                Sistema em Números
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6 max-w-4xl mx-auto">
+                <div class="bg-white rounded-lg shadow-md p-4 text-center">
+                    <i class="fas fa-book text-2xl text-blue-600 mb-2"></i>
+                    <div class="text-2xl font-bold text-gray-800">24</div>
+                    <div class="text-sm text-gray-600">Livros</div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4 text-center">
+                    <i class="fas fa-bookmark text-2xl text-green-600 mb-2"></i>
+                    <div class="text-2xl font-bold text-gray-800">120</div>
+                    <div class="text-sm text-gray-600">Instâncias</div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4 text-center">
+                    <i class="fas fa-archive text-2xl text-purple-600 mb-2"></i>
+                    <div class="text-2xl font-bold text-gray-800">12</div>
+                    <div class="text-sm text-gray-600">Estantes</div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4 text-center">
+                    <i class="fas fa-broadcast-tower text-2xl text-orange-600 mb-2"></i>
+                    <div class="text-2xl font-bold text-gray-800">3</div>
+                    <div class="text-sm text-gray-600">Beacons</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 lg:py-8 mt-12 lg:mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm lg:text-base mb-2">
+                &copy; 2025 Biblioteca IoT - Sistema de Gestão Inteligente de Biblioteca
+            </p>
+            <p class="text-xs lg:text-sm text-gray-400">
+                Tecnologia avançada para uma experiência moderna de biblioteca
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

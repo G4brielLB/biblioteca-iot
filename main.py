@@ -10,6 +10,7 @@ from routes.estantes import router as estantes_router
 from routes.livros import router as livros_router
 from routes.instancias import router as instancias_router
 from routes.painel import router as painel_router
+from routes.home import router as home_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -29,9 +30,11 @@ app.add_middleware(
 
 # Servir arquivos estáticos (CSS, JS, imagens)
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
+app.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
 
 init_db()  # Cria as tabelas no banco ao iniciar o app
 
+app.include_router(home_router)  # Página inicial (/)
 app.include_router(beacons_router)
 app.include_router(estantes_router)
 app.include_router(livros_router)

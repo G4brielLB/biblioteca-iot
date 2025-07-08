@@ -73,6 +73,7 @@ Como acessar os endpoints:
 Todos os endpoints retornam/recebem JSON.
 """
 from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 from typing import List, Dict, Any
 from datetime import datetime
@@ -208,3 +209,13 @@ def devolver_livro(
     db.commit()
     db.refresh(instancia)
     return instancia
+
+@router.get("/{idInstancia}/detalhes/localizacao", response_class=FileResponse)
+def pagina_localizacao(idInstancia: str, db: Session = Depends(get_db)):
+    """Retorna página HTML de localização da instância. O JS carregará os dados via API."""
+    # Verificar se a instância existe
+    instancia = db.query(InstanciaLivroORM).filter(InstanciaLivroORM.idInstancia == idInstancia).first()
+    if not instancia:
+        raise HTTPException(status_code=404, detail="Instância não encontrada")
+    
+    return FileResponse("frontend/localizacao.html")

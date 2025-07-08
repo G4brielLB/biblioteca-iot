@@ -136,7 +136,10 @@ class LivroDetalhes {
                         </div>
                     </div>
                     
-                    <!-- Espaço removido - sem ações de empréstimo/devolução -->
+                    <!-- Botão Localizar -->
+                    <div class="flex justify-end">
+                        ${this.renderBotaoLocalizar(instancia)}
+                    </div>
                 </div>
             </div>
         `;
@@ -214,6 +217,38 @@ class LivroDetalhes {
         
         document.getElementById('livroInfo').classList.add('hidden');
         document.getElementById('instanciasContainer').classList.add('hidden');
+    }
+
+    renderBotaoLocalizar(instancia) {
+        const isEmprestado = instancia.situacao === 'emprestado';
+        
+        if (isEmprestado) {
+            // Botão inativo para livros emprestados
+            return `
+                <button 
+                    class="bg-gray-400 text-white px-3 py-2 rounded-lg cursor-not-allowed flex items-center justify-center text-sm font-medium w-full sm:w-auto opacity-60"
+                    disabled
+                    title="Não é possível localizar - livro emprestado"
+                >
+                    <i class="fas fa-ban mr-1 sm:mr-2"></i>
+                    <span class="hidden sm:inline">Emprestado</span>
+                    <span class="sm:hidden text-xs">Emprestado</span>
+                </button>
+            `;
+        } else {
+            // Botão ativo para livros disponíveis
+            return `
+                <a 
+                    href="/instancias/${instancia.idInstancia}/detalhes/localizacao" 
+                    class="bg-purple-600 text-white px-3 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center text-sm font-medium w-full sm:w-auto"
+                    title="Localizar esta instância"
+                >
+                    <i class="fas fa-search-location mr-1 sm:mr-2"></i>
+                    <span class="hidden sm:inline">Localizar</span>
+                    <span class="sm:hidden text-xs">Localizar</span>
+                </a>
+            `;
+        }
     }
 }
 

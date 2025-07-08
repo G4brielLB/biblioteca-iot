@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Localização - Biblioteca IoT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .seta-direcional {
+            font-size: 8rem;
+            animation: pulse 2s infinite;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        @media (max-width: 640px) {
+            .seta-direcional {
+                font-size: 6rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header Mobile-First -->
+    <header id="header" class="text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <h1 class="text-lg sm:text-xl font-bold flex items-center">
+                    <i class="fas fa-location-arrow mr-2"></i>
+                    Localização
+                </h1>
+                <a id="voltarLink" href="#" class="text-white/80 hover:text-white flex items-center text-sm">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Voltar
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Loading -->
+    <div id="loading" class="text-center py-16">
+        <i class="fas fa-spinner fa-spin text-4xl text-blue-600"></i>
+        <p class="text-gray-600 mt-4">Carregando localização...</p>
+    </div>
+
+    <!-- Erro -->
+    <div id="error" class="hidden container mx-auto px-4 py-8">
+        <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+            <div class="flex items-center">
+                <i class="fas fa-exclamation-triangle text-red-500 text-xl mr-3"></i>
+                <div>
+                    <h3 class="font-semibold text-red-800">Erro</h3>
+                    <p id="errorMessage" class="text-red-700 text-sm"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Mobile-First -->
+    <main id="content" class="hidden container mx-auto px-4 py-6">
+        <!-- Seta de Direção -->
+        <div class="text-center mb-6">
+            <div id="setaDirecional" class="seta-direcional">
+                <i class="fas fa-arrow-up"></i>
+            </div>
+            <p class="text-lg sm:text-xl font-semibold text-gray-700 mt-2">
+                Siga esta direção
+            </p>
+            <p id="estanteInfo" class="text-sm text-gray-500">
+                Carregando informações da estante...
+            </p>
+        </div>
+
+        <!-- Informações do Livro - Card Mobile -->
+        <div class="bg-white rounded-lg shadow-lg p-4 mb-6">
+            <h2 class="text-lg sm:text-xl font-bold text-gray-800 mb-3 flex items-center">
+                <i id="bookIcon" class="fas fa-book mr-2"></i>
+                Livro Localizado
+            </h2>
+            
+            <div class="space-y-3">
+                <div>
+                    <h3 id="livroTitulo" class="font-bold text-gray-900 text-base sm:text-lg">Carregando...</h3>
+                    <p id="livroAutor" class="text-gray-600 text-sm sm:text-base">Carregando...</p>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                    <div class="flex items-center">
+                        <i class="fas fa-barcode mr-2 text-gray-400"></i>
+                        <span class="font-medium">ID:</span>
+                        <span id="instanciaId" class="ml-1 text-xs break-all">Carregando...</span>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2 text-gray-400"></i>
+                        <span class="font-medium">Posição:</span>
+                        <span id="posicao" class="ml-1">Carregando...</span>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <i class="fas fa-bookmark mr-2 text-gray-400"></i>
+                        <span class="font-medium">Estante:</span>
+                        <span id="estanteBadge" class="ml-1 text-white px-2 py-1 rounded text-xs">
+                            Carregando...
+                        </span>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <i id="statusIcon" class="fas fa-circle mr-2"></i>
+                        <span class="font-medium">Status:</span>
+                        <span id="situacao" class="ml-1 capitalize">Carregando...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instruções Mobile -->
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h3 class="font-semibold text-blue-800 mb-2 flex items-center">
+                <i class="fas fa-info-circle mr-2"></i>
+                Instruções de Navegação
+            </h3>
+            <ul class="text-blue-700 text-sm space-y-1">
+                <li>• Siga a seta na direção indicada</li>
+                <li>• Procure pela estante de cor <strong id="corEstante">carregando...</strong></li>
+                <li>• Localize a posição <strong id="posicaoEstante">carregando...</strong> na estante</li>
+                <li>• O livro está na situação: <strong id="situacaoEstante">carregando...</strong></li>
+            </ul>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-4 mt-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm">&copy; 2025 Biblioteca IoT - Sistema de Localização</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/localizacao.js"></script>
+</body>
+</html>
